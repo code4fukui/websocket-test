@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Simple WebSocket Chat</title>
+</head><body>
+<h1>Simple WebSocket Chat</h1>
+<form id=form><input id=text placeholder="message"><input type=submit value=send></form>
+<div id=out></div>
+<script type="module">
+const socket = new WebSocket(`ws://${location.host}/api/ws`);
+socket.onopen = () => socket.send("[enter]");
+socket.addEventListener("message", e => out.innerHTML += e.data + "<br>");
+form.onsubmit = (e) => {
+  socket.send(text.value);
+  text.value = "";
+  return false;
+};
+</script>
